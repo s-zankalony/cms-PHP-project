@@ -13,7 +13,6 @@ include "includes/db.php";
     <!-- Blog Entries Column -->
     <div class="col-md-8">
 
-
       <?php
       if (isset($_POST['submit'])) {
 
