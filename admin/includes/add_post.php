@@ -1,11 +1,12 @@
-<?php include_once "../includes/db.php";
-include "../functions.php";
+<?php
+// include_once "../includes/db.php";
+// include "../functions.php";
 
 if (isset($_POST['create_post'])) {
 
   $post_title = $_POST['title'];
   $post_author = $_POST['author'];
-  $post_category_id = $_POST['post_category_id'];
+  $post_category_id = $_POST['category_name'];
   $post_status = $_POST['post_status'];
 
   $post_image = $_FILES['image']['name'];
@@ -20,7 +21,7 @@ if (isset($_POST['create_post'])) {
 
   $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status, post_comment_count) ";
 
-  $query .= "VALUES({$post_category_id},'{$post_title}','{$post_author}',now(),'{$post_image}','{$post_content}','{$post_tags}', '{$post_status}', '{$post_comment_count}' ) ";
+  $query .= "VALUES('{$post_category_id}','{$post_title}','{$post_author}',now(),'{$post_image}','{$post_content}','{$post_tags}', '{$post_status}', '{$post_comment_count}' ) ";
   $create_post_query = mysqli_query($connection, $query);
 
 
@@ -33,12 +34,6 @@ if (isset($_POST['create_post'])) {
 
 
 
-
-
-
-
-
-
 <form action="" method="post" enctype="multipart/form-data">
 
 
@@ -48,10 +43,22 @@ if (isset($_POST['create_post'])) {
   </div>
 
   <div class="form-group">
-    <label for="post_category_id">Post Category Id</label>
-    <input type="text" class="form-control" name="post_category_id">
+    <select name="category_name" id="">
+      <?php
+      $queryCat = "SELECT * FROM categories";
+      $select_categories = mysqli_query($connection, $queryCat);
+      confirmQuery($select_categories);
 
+      while ($row = mysqli_fetch_assoc($select_categories)) {
+        $cat_name = $row['cat_title'];
+        $cat_id = $row['cat_id'];
 
+        echo "<option value='{$cat_id}'>{$cat_name}</option>";
+
+      }
+
+      ?>
+    </select>
   </div>
 
 
@@ -82,9 +89,10 @@ if (isset($_POST['create_post'])) {
 
   <div class="form-group">
     <label for="post_content">Post Content</label>
-    <textarea class="form-control " name="post_content" id="" cols="30" rows="10">
-         </textarea>
+    <textarea class="form-control " name="post_content" id="" cols="30" rows="10"
+      placeholder="Insert content here..."></textarea>
   </div>
+
 
 
 
