@@ -1,6 +1,7 @@
 <?php
 include "includes/header.php";
 include "includes/db.php";
+include "admin/functions.php";
 ?>
 
 <!-- Navigation -->
@@ -61,9 +62,22 @@ include "includes/db.php";
             <!-- Blog Comments -->
 
             <!-- Comments Form -->
-            <div class="well">
+            <?php
+            if (isset($_POST['comment-content'])) {
+                $comment_content = $_POST['comment-content'];
+                $comment_author = "Admin";
+                $comment_post_id = $post_id;
+                $comment_email = "sameh@gmail.com";
+
+                $addComment = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) VALUES ($comment_post_id, '$comment_author', '$comment_email', '$comment_content', 'unapproved', now())";
+                $addCommentQuery = mysqli_query($connection, $addComment);
+                confirmQuery($addCommentQuery);
+                header("Location: post.php?p_id=$post_id#comment-well");
+            }
+            ?>
+            <div class="well" id="comment-well">
                 <h4>Leave a Comment:</h4>
-                <form role="form">
+                <form role="form" method="post">
                     <div class="form-group">
                         <textarea class="form-control" rows="3" name="comment-content"></textarea>
                     </div>
