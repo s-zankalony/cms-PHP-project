@@ -15,17 +15,33 @@ if (isset($_POST['create_post'])) {
   $post_tags = $_POST['post_tags'];
   $post_content = $_POST['post_content'];
   $post_date = date('Y-m-d H:i:s');
-  $post_comment_count = 4;
+
 
   move_uploaded_file($post_image_temp, "../images/$post_image");
 
-  $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status, post_comment_count) ";
-
-  $query .= "VALUES('{$post_category_id}','{$post_title}','{$post_author}',now(),'{$post_image}','{$post_content}','{$post_tags}', '{$post_status}', '{$post_comment_count}' ) ";
-  $create_post_query = mysqli_query($connection, $query);
 
 
-  confirmQuery($create_post_query);
+
+
+  // $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status) ";
+  // $query .= "VALUES('{$post_category_id}','{$post_title}','{$post_author}',now(),'{$post_image}','{$post_content}','{$post_tags}', '{$post_status}')";
+
+  // $create_post_query = mysqli_query($connection, $query);
+
+  // confirmQuery($create_post_query);
+
+  $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status) ";
+  $query .= "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+
+  $stmt = mysqli_prepare($connection, $query);
+  mysqli_stmt_bind_param($stmt, "isssssss", $post_category_id, $post_title, $post_author, $post_date, $post_image, $post_content, $post_tags, $post_status);
+  mysqli_stmt_execute($stmt);
+
+  if (!$stmt) {
+    die("Query failed: " . mysqli_error($connection));
+  }
+
+  mysqli_stmt_close($stmt);
 
 
 }

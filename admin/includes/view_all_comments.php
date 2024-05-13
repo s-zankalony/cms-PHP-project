@@ -10,7 +10,6 @@
       <th>Comment Date</th>
       <th>Approve</th>
       <th>Unapprove</th>
-      <th>Edit</th>
       <th>Delete</th>
     </tr>
   </thead>
@@ -26,10 +25,18 @@
 
 <?php
 if (isset($_GET['delete'])) {
-  $the_post_id = $_GET['delete'];
-  $query = "DELETE FROM posts WHERE post_id = {$the_post_id}";
+  $comment_id = $_GET['delete'];
+  $query = "DELETE FROM comments WHERE comment_id = {$comment_id}";
   $delete_query = mysqli_query($connection, $query);
-  header("Location: posts.php");
+  header("Location: comments.php");
+}
+
+if (isset($_GET['approve_comment'])) {
+  approveComment();
+}
+
+if (isset($_GET['unapprove'])) {
+  unapproveComment();
 }
 
 

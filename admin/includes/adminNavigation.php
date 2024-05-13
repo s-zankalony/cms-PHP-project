@@ -53,7 +53,7 @@
         <a href="categories.php"><i class="fa fa-fw fa-wrench"></i> Categories</a>
       </li>
 
-      <li>
+      <li class="<?php echo (basename($_SERVER['REQUEST_URI']) === 'comments.php' ? 'active' : ''); ?>">
         <a href="comments.php"><i class="fa fa-fw fa-file"></i> Comments</a>
       </li>
       <li>

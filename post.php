@@ -33,8 +33,8 @@ include "admin/functions.php";
 
 
                 <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
+                    Post Page
+                    <small>Explore Full Post</small>
                 </h1>
 
                 <!-- First Blog Post -->
@@ -63,25 +63,40 @@ include "admin/functions.php";
 
             <!-- Comments Form -->
             <?php
-            if (isset($_POST['comment-content'])) {
+            if (isset($_POST['submit'])) {
                 $comment_content = $_POST['comment-content'];
-                $comment_author = "Admin";
+                $comment_author = $_POST['comment-author'];
                 $comment_post_id = $post_id;
-                $comment_email = "sameh@gmail.com";
+                $comment_email = $_POST['comment-email'];
 
                 $addComment = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) VALUES ($comment_post_id, '$comment_author', '$comment_email', '$comment_content', 'unapproved', now())";
                 $addCommentQuery = mysqli_query($connection, $addComment);
                 confirmQuery($addCommentQuery);
+
+                $queryUpdateCommentCount = "UPDATE posts SET post_comment_count = post_comment_count + 1 WHERE post_id = $post_id";
+                $updateCommentCount = mysqli_query($connection, $queryUpdateCommentCount);
+                confirmQuery($updateCommentCount);
+
                 header("Location: post.php?p_id=$post_id#comment-well");
             }
             ?>
             <div class="well" id="comment-well">
                 <h4>Leave a Comment:</h4>
-                <form role="form" method="post">
+                <form role="form" method="post" action="">
+                    <div class="form-group">
+                        <label for="comment-author">Author</label>
+                        <input type="text" class="form-control" name="comment-author"
+                            placeholder="Insert your name..." />
+                    </div>
+                    <div class="form-group">
+                        <label for="comment-email">Email</label>
+                        <input type="email" class="form-control" name="comment-email"
+                            placeholder="Insert your email..." />
+                    </div>
                     <div class="form-group">
                         <textarea class="form-control" rows="3" name="comment-content"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" name="submit">Submit</button>
                 </form>
             </div>
 
@@ -91,7 +106,7 @@ include "admin/functions.php";
 
             <!-- Comment -->
             <?php
-            $commentQuery = "SELECT * FROM comments WHERE comment_post_id = $post_id";
+            $commentQuery = "SELECT * FROM comments WHERE comment_post_id = $post_id AND comment_status = 'approved' ORDER BY comment_id DESC";
 
             $commentQuery = mysqli_query($connection, $commentQuery);
             while ($row = mysqli_fetch_assoc($commentQuery)) {
