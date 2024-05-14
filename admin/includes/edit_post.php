@@ -80,6 +80,7 @@ if (isset($_POST['cancel'])) {
 
   <div class="form-group">
     <select name="category_name" id="">
+
       <?php
       $queryCat = "SELECT * FROM categories";
       $select_categories = mysqli_query($connection, $queryCat);
@@ -89,7 +90,12 @@ if (isset($_POST['cancel'])) {
         $cat_name = $row['cat_title'];
         $cat_id = $row['cat_id'];
 
-        echo "<option value='{$cat_id}'>{$cat_name}</option>";
+        if ($cat_id == $post_category_id) {
+          echo "<option value='{$cat_id}' selected>{$cat_name}</option>";
+        } else {
+          echo "<option value='{$cat_id}'>{$cat_name}</option>";
+        }
+
 
       }
 
