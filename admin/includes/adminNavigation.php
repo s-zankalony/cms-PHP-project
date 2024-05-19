@@ -63,10 +63,10 @@
 
         <ul id="user-dropdown" class="collapse">
           <li>
-            <a href="#">View All Users</a>
+            <a href="users.php">View All Users</a>
           </li>
           <li>
-            <a href="#">Add Users</a>
+            <a href="users.php?source=add_user">Add Users</a>
           </li>
         </ul>
       </li>

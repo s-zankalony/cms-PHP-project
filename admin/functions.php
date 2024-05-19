@@ -85,6 +85,40 @@ function displayAllPosts()
 
   }
 }
+function displayAllUsers()
+{
+  global $connection;
+  $query = "SELECT users.* FROM users";
+  $select_users = mysqli_query($connection, $query);
+  confirmQuery($select_users);
+  while ($row = mysqli_fetch_assoc($select_users)) {
+    $user_id = $row['user_id'];
+    $user_name = $row['user_name'];
+    $user_password = $row['user_password'];
+    $user_firstname = $row['user_firstname'];
+    $user_lastname = $row['user_lastname'];
+    $user_email = $row['user_email'];
+    $user_image = $row['user_image'];
+    $user_role = $row['user_role'];
+    $randSalt = $row['randSalt'];
+
+    echo "<tr>";
+    echo "<td>{$user_id}</td>";
+    echo "<td>{$user_name}</td>";
+    echo "<td>{$user_password}</td>";
+    echo "<td>{$user_firstname}</td>";
+    echo "<td>{$user_lastname}</td>";
+    echo "<td>{$user_email}</td>";
+    // echo "<td>{$user_image}</td>";
+    echo "<td><img width='100' src='../images/{$user_image}' alt='image'></td>";
+    echo "<td>{$user_role}</td>";
+    echo "<td>{$randSalt}</td>";
+    echo "<td><a href='users.php?source=edit_user&u_id={$user_id}' >Edit</a></td>";
+    echo "<td><a href='users.php?delete={$user_id}' >Delete</a></td>";
+
+
+  }
+}
 
 
 function displayAllComments()

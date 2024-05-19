@@ -1,8 +1,11 @@
 {
   "cSpell.words": [
+    "firstname",
     "glyphicon",
     "intelephense",
-    "phpcs"
+    "lastname",
+    "phpcs",
+    "randsalt"
   ],
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#b289c7",
