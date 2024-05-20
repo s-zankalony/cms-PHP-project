@@ -1,3 +1,16 @@
+<?php ob_start();
+include "admin/functions.php";
+
+session_start();
+
+if (isset($_GET['logout'])) {
+  logout();
+}
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +29,13 @@
 
   <!-- Custom CSS -->
   <link href="css/blog-home.css" rel="stylesheet">
+
+  <style>
+    .white-text {
+      color: ##9d9d9d;
+      /* Change this to any color you want */
+    }
+  </style>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

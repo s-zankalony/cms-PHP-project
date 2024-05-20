@@ -185,3 +185,16 @@ function confirmQuery($query)
 
 }
 
+
+function logout()
+{
+  session_destroy();
+
+  if (isset($_SERVER['REQUEST_URI']) === 'admin') {
+    header("Location: ../index.php");
+  } else {
+    header("Location: ./index.php");
+  }
+
+
+}

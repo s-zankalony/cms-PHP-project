@@ -1,6 +1,14 @@
 <?php ob_start(); ?>
 <?php include_once "../includes/db.php" ?>
 <?php include "./functions.php"; ?>
+<?php session_start();
+
+
+if (isset($_GET['logout'])) {
+  logout();
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">

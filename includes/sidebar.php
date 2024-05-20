@@ -19,6 +19,28 @@
     <!-- /.input-group -->
   </div>
 
+  <!-- Login form -->
+  <div class="well">
+    <h4>Login</h4>
+    <form action="includes/login.php" method="POST"> <!-- login form -->
+
+      <div class="form-group">
+        <input name="username" type="text" class="form-control" placeholder="Enter user name...">
+      </div>
+      <div class="form-group">
+        <input name="password" type="password" class="form-control" placeholder="Enter password...">
+      </div>
+      <div class="form-group">
+        <button name="login" class="btn btn-primary" type="submit">
+          submit
+        </button>
+      </div>
+
+    </form> <!-- /.login form -->
+
+    <!-- /.input-group -->
+  </div>
+
 
 
 
@@ -44,30 +66,8 @@
             echo "<li><a href='category.php?category={$cat_id}'>{$cat_title}</a></li>";
           }
           ?>
-          <!-- <li><a href="#">Category Name</a>
-          </li>
-          <li><a href="#">Category Name</a>
-          </li>
-          <li><a href="#">Category Name</a>
-          </li>
-          <li><a href="#">Category Name</a>
-          </li> -->
         </ul>
       </div>
-      <!-- /.col-lg-6 -->
-      <!-- <div class="col-lg-6">
-        <ul class="list-unstyled">
-          <li><a href="#">Category Name</a>
-          </li>
-          <li><a href="#">Category Name</a>
-          </li>
-          <li><a href="#">Category Name</a>
-          </li>
-          <li><a href="#">Category Name</a>
-          </li>
-        </ul>
-      </div> -->
-      <!-- /.col-lg-6 -->
     </div>
     <!-- /.row -->
   </div>
