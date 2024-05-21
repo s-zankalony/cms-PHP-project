@@ -190,11 +190,9 @@ function logout()
 {
   session_destroy();
 
-  if (isset($_SERVER['REQUEST_URI']) === 'admin') {
+  if (strpos($_SERVER['REQUEST_URI'], 'admin') !== false) {
     header("Location: ../index.php");
   } else {
-    header("Location: ./index.php");
+    header("Location: index.php");
   }
-
-
 }

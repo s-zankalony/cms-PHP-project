@@ -40,19 +40,19 @@
         ?>
 
 
-        <li>
-          <a href="
+        <!-- <li>
           <?php
           if (isset($_SESSION['user_role'])) {
             if ($_SESSION['user_role'] === 'admin') {
-              echo 'admin';
+              echo "<a href='admin'>Admin</a>";
             } else {
-              echo 'index.php';
+              echo '';
             }
           }
           ?>
-          ">Admin</a>
-        </li>
+        </li> -->
+
+
         <!-- <li>
           <a href="#">Services</a>
         </li>

@@ -20,7 +20,13 @@ if (isset($_SESSION['username'])) {
 <ul class="nav navbar-right top-nav navbar-nav">
 
   <?php
-  echo (basename($_SERVER['REQUEST_URI']) === 'admin' ? '<li><a href="../index.php">Home</a></li>' : '');
+  if ((strpos($_SERVER['REQUEST_URI'], 'admin') !== false)) {
+    echo "<li><a href='../index.php'>Home</a></li>";
+  } else if ((strpos($_SERVER['REQUEST_URI'], 'index') !== false) && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
+    echo "<li><a href='admin'>Admin</a></li>";
+  } else {
+    echo '';
+  }
   ?>
 
 
