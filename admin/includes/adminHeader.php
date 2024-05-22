@@ -1,7 +1,8 @@
-<?php ob_start(); ?>
-<?php include_once "../includes/db.php" ?>
-<?php include "./functions.php"; ?>
-<?php session_start();
+<?php
+ob_start();
+session_start();
+include_once "../includes/db.php";
+include "./functions.php";
 
 
 if (isset($_GET['logout'])) {

@@ -36,7 +36,9 @@ if (isset($_SESSION['username'])) {
       <?php echo isset($fullName) ? $fullName : 'Logged Out'; ?> <b class="caret"></b></a>
     <ul class="dropdown-menu">
       <li>
-        <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+        <a
+          href="<?php echo (strpos($_SERVER['REQUEST_URI'], 'admin') !== false) ? 'profile.php' : 'admin/profile.php'; ?>"><i
+            class="fa fa-fw fa-user"></i> Profile</a>
       </li>
 
       <li class="divider"></li>

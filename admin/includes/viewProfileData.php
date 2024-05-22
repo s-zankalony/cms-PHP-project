@@ -66,8 +66,8 @@ while ($row = mysqli_fetch_assoc($select_user_by_id)) {
 
 
   <div class="form-group">
-    <a href="users.php?source=edit_user&u_id=<?php echo $userId; ?>"><input class="btn btn-primary" type="send"
-        name="update_user" value="Update User"></a>
+    <a href="editProfile.php"><input class="btn btn-primary" type="send" name="update_user" value="Update User"></a>
+    <a href="../index.php"><input class="btn btn-primary" type="send" name="update_user" value="Back Home"></a>
   </div>
 
 
