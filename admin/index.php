@@ -31,13 +31,25 @@
                 $postsResult = mysqli_query($connection, $postsQuery);
                 $postsCount = mysqli_num_rows($postsResult);
 
+                $draftPostsQuery = "SELECT * FROM posts WHERE post_status = 'draft'";
+                $draftPostsResult = mysqli_query($connection, $draftPostsQuery);
+                $draftPostsCount = mysqli_num_rows($draftPostsResult);
+
                 $commentsQuery = "SELECT * FROM comments";
                 $commentsResult = mysqli_query($connection, $commentsQuery);
                 $commentsCount = mysqli_num_rows($commentsResult);
 
+                $unapprovedCommentsQuery = "SELECT * FROM comments WHERE comment_status = 'unapproved'";
+                $unapprovedCommentsResult = mysqli_query($connection, $unapprovedCommentsQuery);
+                $unapprovedCommentsCount = mysqli_num_rows($unapprovedCommentsResult);
+
                 $usersQuery = "SELECT * FROM users";
                 $usersResult = mysqli_query($connection, $usersQuery);
                 $usersCount = mysqli_num_rows($usersResult);
+
+                $adminUsersQuery = "SELECT * FROM users WHERE user_role = 'admin'";
+                $adminUsersResult = mysqli_query($connection, $adminUsersQuery);
+                $adminUsersCount = mysqli_num_rows($adminUsersResult);
 
                 $categoriesQuery = "SELECT * FROM categories";
                 $categoriesResult = mysqli_query($connection, $categoriesQuery);
@@ -138,7 +150,43 @@
                     </div>
                 </div>
                 <!-- /.row -->
+                <div class="row">
+                    <script type="text/javascript">
+                        google.charts.load('current', { 'packages': ['bar'] });
+                        google.charts.setOnLoadCallback(drawChart);
 
+                        function drawChart() {
+                            var data = google.visualization.arrayToDataTable([
+                                ['Data', 'Count'],
+
+                                <?php
+                                // data in the chart is an array of arrays
+                                $elementText = ['Posts', 'draftPostsCount', 'Comments', 'Pending Comments', 'Users', 'Admins', 'Categories'];
+                                $elementCount = [$postsCount, $draftPostsCount, $commentsCount, $unapprovedCommentsCount, $usersCount, $adminUsersCount, $categoriesCount];
+
+                                for ($i = 0; $i < count($elementText); $i++) {
+                                    echo "['{$elementText[$i]}',{$elementCount[$i]}],";
+                                }
+
+                                ?>
+                                // ['Posts', 3],
+                            ]);
+
+                            var options = {
+                                chart: {
+                                    title: '',
+                                    subtitle: '',
+                                }
+                            };
+
+                            var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+                            chart.draw(data, google.charts.Bar.convertOptions(options));
+                        }
+                    </script>
+
+                    <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
+                </div>
 
             </div>
             <!-- /.container-fluid -->

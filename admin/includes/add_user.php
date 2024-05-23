@@ -44,6 +44,7 @@ if (isset($_POST['add-user'])) {
 <form action="" method="post" enctype="multipart/form-data">
 
 
+
   <div class="form-group">
     <label for="title">User Name</label>
     <input type="text" class="form-control" name="user_name">
