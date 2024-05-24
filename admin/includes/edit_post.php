@@ -113,9 +113,29 @@ if (isset($_POST['cancel'])) {
   </div>
   <div class="form-group">
     <select name="post_status" id="">
-      <option value="draft">Post Status</option>
+
+      <?php
+
+      $postStatusQuery = "SELECT * FROM posts WHERE post_id = $the_post_id";
+      $select_post_status = mysqli_query($connection, $postStatusQuery);
+      confirmQuery($select_post_status);
+
+      while ($row = mysqli_fetch_assoc($select_post_status)) {
+        $post_status = $row['post_status'];
+        if ($post_status == 'published') {
+          echo "<option value='published' selected>Published</option>";
+          echo "<option value='draft'>Draft</option>";
+        } else {
+          echo "<option value='published'>Published</option>";
+          echo "<option value='draft' selected>Draft</option>";
+        }
+      }
+
+      ?>
+
+      <!-- <option value="draft">Post Status</option>
       <option value="published">Published</option>
-      <option value="draft">Draft</option>
+      <option value="draft">Draft</option> -->
     </select>
   </div>
 
@@ -134,9 +154,18 @@ if (isset($_POST['cancel'])) {
 
   <div class="form-group">
     <label for="post_content">Post Content</label>
-    <textarea class="form-control " name="post_content" id="" cols="30" rows="10"><?php echo $post_content ?></textarea>
+    <textarea class="form-control " name="post_content" id="summernote" cols="30"
+      rows="10"><?php echo $post_content ?></textarea>
   </div>
 
+  <!-- initialize summernote editor -->
+  <script>
+    $('#summernote').summernote({
+      tabsize: 2,
+      height: 100
+    });
+  </script>
+  <!-- /initialize summernote editor -->
 
 
   <div class="form-group">

@@ -6,7 +6,9 @@
     "intelephense",
     "lastname",
     "phpcs",
-    "randsalt"
+    "randsalt",
+    "summernote",
+    "tabsize"
   ],
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#b289c7",

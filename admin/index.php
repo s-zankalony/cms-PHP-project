@@ -35,6 +35,10 @@
                 $draftPostsResult = mysqli_query($connection, $draftPostsQuery);
                 $draftPostsCount = mysqli_num_rows($draftPostsResult);
 
+                $publishedPostsQuery = "SELECT * FROM posts WHERE post_status = 'published'";
+                $publishedPostsResult = mysqli_query($connection, $publishedPostsQuery);
+                $publishedPostsCount = mysqli_num_rows($publishedPostsResult);
+
                 $commentsQuery = "SELECT * FROM comments";
                 $commentsResult = mysqli_query($connection, $commentsQuery);
                 $commentsCount = mysqli_num_rows($commentsResult);
@@ -43,6 +47,10 @@
                 $unapprovedCommentsResult = mysqli_query($connection, $unapprovedCommentsQuery);
                 $unapprovedCommentsCount = mysqli_num_rows($unapprovedCommentsResult);
 
+                $approvedCommentsQuery = "SELECT * FROM comments WHERE comment_status = 'approved'";
+                $approvedCommentsResult = mysqli_query($connection, $approvedCommentsQuery);
+                $approvedCommentsCount = mysqli_num_rows($approvedCommentsResult);
+
                 $usersQuery = "SELECT * FROM users";
                 $usersResult = mysqli_query($connection, $usersQuery);
                 $usersCount = mysqli_num_rows($usersResult);
@@ -50,6 +58,10 @@
                 $adminUsersQuery = "SELECT * FROM users WHERE user_role = 'admin'";
                 $adminUsersResult = mysqli_query($connection, $adminUsersQuery);
                 $adminUsersCount = mysqli_num_rows($adminUsersResult);
+
+                $regularUsersQuery = "SELECT * FROM users WHERE user_role = 'user'";
+                $regularUsersResult = mysqli_query($connection, $regularUsersQuery);
+                $regularUsersCount = mysqli_num_rows($regularUsersResult);
 
                 $categoriesQuery = "SELECT * FROM categories";
                 $categoriesResult = mysqli_query($connection, $categoriesQuery);
@@ -161,8 +173,8 @@
 
                                 <?php
                                 // data in the chart is an array of arrays
-                                $elementText = ['Posts', 'draftPostsCount', 'Comments', 'Pending Comments', 'Users', 'Admins', 'Categories'];
-                                $elementCount = [$postsCount, $draftPostsCount, $commentsCount, $unapprovedCommentsCount, $usersCount, $adminUsersCount, $categoriesCount];
+                                $elementText = ['Published Posts', 'Draft Posts', 'Approved Comments', 'Pending Comments', 'Users', 'Admins', 'Categories'];
+                                $elementCount = [$publishedPostsCount, $draftPostsCount, $approvedCommentsCount, $unapprovedCommentsCount, $regularUsersCount, $adminUsersCount, $categoriesCount];
 
                                 for ($i = 0; $i < count($elementText); $i++) {
                                     echo "['{$elementText[$i]}',{$elementCount[$i]}],";
@@ -170,6 +182,7 @@
 
                                 ?>
                                 // ['Posts', 3],
+                               
                             ]);
 
                             var options = {

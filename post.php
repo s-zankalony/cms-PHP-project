@@ -1,7 +1,7 @@
 <?php
 include "includes/header.php";
 include "includes/db.php";
-include "admin/functions.php";
+// include "admin/functions.php";
 
 ?>
 
@@ -102,8 +102,16 @@ include "admin/functions.php";
                             placeholder="Insert your email..." />
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" rows="3" name="comment-content"></textarea>
+                        <textarea class="form-control" rows="3" name="comment-content" id="summernote"></textarea>
                     </div>
+                    <!-- initialize summernote editor -->
+                    <script>
+                        $('#summernote').summernote({
+                            tabsize: 2,
+                            height: 100
+                        });
+                    </script>
+                    <!-- /initialize summernote editor -->
                     <button type="submit" class="btn btn-primary" name="submit">Submit</button>
                 </form>
             </div>
