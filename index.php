@@ -53,7 +53,9 @@ include "includes/db.php";
                     </p>
                     <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
                     <hr>
-                    <img class="img-responsive" src="./images/<?php echo $post_image ?>" alt="">
+                    <a href="post.php?p_id=<?php echo $post_id ?>">
+                        <img class="img-responsive" src="./images/<?php echo $post_image ?>" alt="">
+                    </a>
                     <hr>
 
                     <p><?php echo $post_content; ?></p>

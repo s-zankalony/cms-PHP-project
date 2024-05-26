@@ -3,6 +3,8 @@ include "includes/header.php";
 include "includes/db.php";
 // include "admin/functions.php";
 
+
+
 ?>
 
 <!-- Navigation -->
@@ -17,12 +19,21 @@ include "includes/db.php";
 
 
             <?php
+
+
             if (isset($_GET['p_id'])) {
                 $post_id = $_GET['p_id'];
-            }
-            $query = "SELECT * FROM posts WHERE post_id = $post_id";
+                $query = "SELECT * FROM posts WHERE post_id = $post_id";
+                $searchQuery = mysqli_query($connection, $query);
+                confirmQuery($searchQuery);
 
-            $searchQuery = mysqli_query($connection, $query);
+            } else {
+                // Handle the case where p_id is not provided
+                // For example, redirect to the homepage or display an error message
+                header("Location: index.php");
+                exit();
+            }
+
 
             // inserting comments
             if (isset($_POST['submit'])) {

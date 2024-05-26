@@ -40,17 +40,20 @@
         ?>
 
 
-        <!-- <li>
+        <li>
           <?php
           if (isset($_SESSION['user_role'])) {
             if ($_SESSION['user_role'] === 'admin') {
-              echo "<a href='admin'>Admin</a>";
+              if (isset($_GET['p_id'])) {
+                $post_id = $_GET['p_id'];
+                echo "<a href='posts.php?delete={$post_id}'>Edit Post</a>";
+              }
             } else {
               echo '';
             }
           }
           ?>
-        </li> -->
+        </li>
 
 
         <!-- <li>
