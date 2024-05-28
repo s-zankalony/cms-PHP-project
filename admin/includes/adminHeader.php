@@ -52,9 +52,7 @@ if (isset($_GET['logout'])) {
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-  <!-- Script for the awesome charts -->
 
-  <!-- <script src="js/scripts.js"></script> -->
 
   <script>
     $(document).ready(function () {

@@ -32,8 +32,12 @@
       </div>
       <div class="form-group">
         <button name="login" class="btn btn-primary" type="submit">
-          submit
+          Submit
         </button>
+        <button name="register" class="btn btn-primary" type="register">
+          Register
+        </button>
+
       </div>
 
     </form> <!-- /.login form -->

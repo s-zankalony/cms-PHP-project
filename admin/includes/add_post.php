@@ -43,6 +43,9 @@ if (isset($_POST['create_post'])) {
 
   mysqli_stmt_close($stmt);
 
+  $the_post_id = mysqli_insert_id($connection);
+
+  echo "<p class='bg-success'>Post Added. <a href='../post.php?p_id={$the_post_id}'>View Post</a> or <a href='posts.php'>View All Posts</a></p>";
 
 }
 

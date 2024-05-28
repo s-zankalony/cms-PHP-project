@@ -1,7 +1,9 @@
-<?php ob_start();
+<?php
+ob_start();
+session_start();
+include_once "includes/db.php";
 include "admin/functions.php";
 
-session_start();
 
 if (isset($_GET['logout'])) {
   logout();
@@ -37,10 +39,11 @@ if (isset($_GET['logout'])) {
     }
   </style>
 
+  <!-- Custom Fonts -->
+  <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
   <!-- jquery -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
   <!-- include summernote css/js -->

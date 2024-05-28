@@ -1,12 +1,19 @@
 <?php include "db.php";
 session_start();
 
+if (isset($_POST['register'])) {
+  header("Location: ../registration.php");
+}
+
 if (isset($_POST['login'])) {
   $username = $_POST['username'];
   $password = $_POST['password'];
 
   $username = mysqli_real_escape_string($connection, $username);
   $password = mysqli_real_escape_string($connection, $password);
+  // hash password
+  // $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+
 
   $query = "SELECT * FROM users WHERE user_name = '{$username}'";
   $select_user_query = mysqli_query($connection, $query);
@@ -30,7 +37,9 @@ if (isset($_POST['login'])) {
   }
 
 
-  if ($password === $db_user_password) {
+
+
+  if (password_verify($password, $db_user_password)) {
 
     $_SESSION['user_id'] = $db_user_id;
     $_SESSION['username'] = $db_username;

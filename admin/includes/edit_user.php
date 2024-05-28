@@ -21,6 +21,7 @@ while ($row = mysqli_fetch_assoc($select_user_by_id)) {
 if (isset($_POST['update_user'])) {
   $user_name = $_POST['user_name'];
   $user_password = $_POST['user_password'];
+  $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
   $user_firstname = $_POST['user_firstname'];
   $user_lastname = $_POST['user_lastname'];
   $user_email = $_POST['user_email'];

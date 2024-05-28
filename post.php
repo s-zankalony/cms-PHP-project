@@ -42,15 +42,20 @@ include "includes/db.php";
                 $comment_post_id = $post_id;
                 $comment_email = $_POST['comment-email'];
 
-                $addComment = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) VALUES ($comment_post_id, '$comment_author', '$comment_email', '$comment_content', 'unapproved', now())";
-                $addCommentQuery = mysqli_query($connection, $addComment);
-                confirmQuery($addCommentQuery);
+                if (empty($comment_author) || empty($comment_email) || empty($comment_content)) {
+                    echo "<script>alert('Fields cannot be empty')</script>";
+                } else {
 
-                $queryUpdateCommentCount = "UPDATE posts SET post_comment_count = post_comment_count + 1 WHERE post_id = $post_id";
-                $updateCommentCount = mysqli_query($connection, $queryUpdateCommentCount);
-                confirmQuery($updateCommentCount);
+                    $addComment = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) VALUES ($comment_post_id, '$comment_author', '$comment_email', '$comment_content', 'unapproved', now())";
+                    $addCommentQuery = mysqli_query($connection, $addComment);
+                    confirmQuery($addCommentQuery);
 
-                header("Location: post.php?p_id=$post_id#comment-well");
+                    $queryUpdateCommentCount = "UPDATE posts SET post_comment_count = post_comment_count + 1 WHERE post_id = $post_id";
+                    $updateCommentCount = mysqli_query($connection, $queryUpdateCommentCount);
+                    confirmQuery($updateCommentCount);
+
+                    header("Location: post.php?p_id=$post_id#comment-well");
+                }
             }
             // end inserting comments
             

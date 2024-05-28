@@ -69,9 +69,10 @@ function displayAllPosts()
     $post_status = $row['post_status'];
     $post_comments = $row['post_comment_count'];
     echo "<tr>";
+    echo "<td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='{$post_id}'></td>";
     echo "<td>{$post_id}</td>";
     echo "<td>{$post_author}</td>";
-    echo "<td>{$post_title}</td>";
+    echo "<td><a href='../post.php?p_id={$post_id}' >{$post_title}</a></td>";
     echo "<td>{$cat_name}</td>";
     echo "<td>{$post_status}</td>";
     echo "<td>{$post_image}</td>";
