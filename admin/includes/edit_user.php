@@ -20,8 +20,10 @@ while ($row = mysqli_fetch_assoc($select_user_by_id)) {
 
 if (isset($_POST['update_user'])) {
   $user_name = $_POST['user_name'];
-  $user_password = $_POST['user_password'];
-  $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
+  if (isset($_POST['user_password']) && !empty($_POST['user_password'])) {
+    $user_password = $_POST['user_password'];
+    $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
+  }
   $user_firstname = $_POST['user_firstname'];
   $user_lastname = $_POST['user_lastname'];
   $user_email = $_POST['user_email'];
@@ -45,20 +47,37 @@ if (isset($_POST['update_user'])) {
     }
   }
 
+  if (empty($user_password)) {
+    $query = "UPDATE users SET ";
+    $query .= "user_name = '{$user_name}', ";
+    $query .= "user_firstname = '{$user_firstname}', ";
+    $query .= "user_lastname = '{$user_lastname}', ";
+    $query .= "user_email = '{$user_email}', ";
+    $query .= "user_image = '{$user_image}', ";
+    $query .= "user_role = '{$user_role}', ";
+    $query .= "randSalt = '{$randSalt}' ";
+    $query .= "WHERE user_id = {$the_user_id}";
+    $update_user = mysqli_query($connection, $query);
+    confirmQuery($update_user);
+    echo "<p class='bg-success'>User Updated. <a href='../users.php?u_id={$the_user_id}'>View User</a> or <a href='users.php'>Edit More Users</a></p>";
+  } else {
 
-  $query = "UPDATE users SET ";
-  $query .= "user_name = '{$user_name}', ";
-  $query .= "user_password = '{$user_password}', ";
-  $query .= "user_firstname = '{$user_firstname}', ";
-  $query .= "user_lastname = '{$user_lastname}', ";
-  $query .= "user_email = '{$user_email}', ";
-  $query .= "user_image = '{$user_image}', ";
-  $query .= "user_role = '{$user_role}', ";
-  $query .= "randSalt = '{$randSalt}' ";
-  $query .= "WHERE user_id = {$the_user_id}";
-  $update_user = mysqli_query($connection, $query);
-  confirmQuery($update_user);
-  echo "<p class='bg-success'>User Updated. <a href='../users.php?u_id={$the_user_id}'>View User</a> or <a href='users.php'>Edit More Users</a></p>";
+    $query = "UPDATE users SET ";
+    $query .= "user_name = '{$user_name}', ";
+    $query .= "user_password = '{$user_password}', ";
+    $query .= "user_firstname = '{$user_firstname}', ";
+    $query .= "user_lastname = '{$user_lastname}', ";
+    $query .= "user_email = '{$user_email}', ";
+    $query .= "user_image = '{$user_image}', ";
+    $query .= "user_role = '{$user_role}', ";
+    $query .= "randSalt = '{$randSalt}' ";
+    $query .= "WHERE user_id = {$the_user_id}";
+    $update_user = mysqli_query($connection, $query);
+    confirmQuery($update_user);
+    echo "<p class='bg-success'>User Updated. <a href='../users.php?u_id={$the_user_id}'>View User</a> or <a href='users.php'>Edit More Users</a></p>";
+  }
+
+
 
 }
 
@@ -79,7 +98,7 @@ if (isset($_POST['cancel'])) {
 
   <div class="form-group">
     <label for="title">User Password</label>
-    <input type="password" class="form-control" name="user_password" value="<?php echo $user_password ?>">
+    <input type="password" class="form-control" name="user_password" value="">
   </div>
 
   <div class="form-group">

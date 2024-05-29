@@ -16,12 +16,13 @@ include "includes/header.php";
 
       <?php
 
-      if (isset($_GET['category'])) {
-        $post_category_id = $_GET['category'];
+      if (isset($_GET['author'])) {
+        $post_author = $_GET['author'];
+        $post_author = urldecode($post_author);
       }
 
 
-      $query = "SELECT * FROM posts WHERE post_category_id = $post_category_id";
+      $query = "SELECT * FROM posts WHERE post_author = '$post_author'";
 
       $searchQuery = mysqli_query($connection, $query);
 
@@ -37,7 +38,7 @@ include "includes/header.php";
 
         <h1 class="page-header">
           CMS Application
-          <small>Browse by Category</small>
+          <small>Explore Latest Posts by <?php echo $post_author; ?></small>
         </h1>
 
         <!-- First Blog Post -->

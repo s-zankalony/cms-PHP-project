@@ -19,6 +19,13 @@ if (isset($_POST['checkBoxArray'])) {
         $update_to_delete_status = mysqli_query($connection, $query);
         confirmQuery($update_to_delete_status);
         break;
+      case 'clone':
+        $query = "INSERT INTO posts (post_title, post_author, post_category_id, post_status, post_image, post_tags, post_content) 
+              SELECT post_title, post_author, post_category_id, post_status, post_image, post_tags, post_content 
+              FROM posts WHERE post_id = {$postValueId}";
+        $clone_post = mysqli_query($connection, $query);
+        confirmQuery($clone_post);
+        break;
       default:
         # code...
         break;
@@ -45,6 +52,7 @@ if (isset($_POST['checkBoxArray'])) {
         <option value="published">Publish</option>
         <option value="draft">Draft</option>
         <option value="delete">Delete</option>
+        <option value="clone">Clone</option>
       </select>
     </div>
 

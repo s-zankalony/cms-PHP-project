@@ -52,6 +52,8 @@ if (isset($_GET['logout'])) {
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+  <!-- Loader CSS -->
+  <link href="css/loader.css" rel="stylesheet">
 
 
   <script>
