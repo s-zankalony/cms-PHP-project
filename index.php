@@ -19,11 +19,30 @@ include "includes/header.php";
             </h1>
 
             <?php
-            $query = "SELECT * FROM posts WHERE post_status = 'published'";
+
+            if (isset($_GET['page'])) {
+                $page = $_GET['page'];
+            } else {
+                $page = "";
+            }
+
+            if ($page == "" || $page == 1) {
+                $page_1 = 0;
+            } else {
+                $page_1 = ($page * 5) - 5;
+            }
+
+
+
+
+
+
+            $query = "SELECT * FROM posts WHERE post_status = 'published' limit $page_1, 5";
 
             $searchQuery = mysqli_query($connection, $query);
             $num_posts = mysqli_num_rows($searchQuery);
-
+            // $count = ceil($num_posts / 5);
+            
             if ($num_posts == 0) {
                 echo "<h1 class='text-center'>No Post Available</h1>";
             } else {
@@ -36,6 +55,7 @@ include "includes/header.php";
                     $post_image = $row['post_image'];
                     $post_status = $row['post_status'];
                     $post_content = substr($row['post_content'], 0, 100);
+                    $post_views = $row['post_views'];
 
 
                     ?>
@@ -52,6 +72,7 @@ include "includes/header.php";
                         by <a href="author.php?author=<?php echo urlencode($post_author); ?>"><?php echo $post_author; ?></a>
                     </p>
                     <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
+                    <p><span class="glyphicon glyphicon-eye-open"></span> Views <?php echo $post_views; ?></p>
                     <hr>
                     <a href="post.php?p_id=<?php echo $post_id ?>">
                         <img class="img-responsive" src="./images/<?php echo $post_image ?>" alt="">
@@ -80,6 +101,19 @@ include "includes/header.php";
     <!-- /.row -->
 
     <hr>
+
+    <!-- pages -->
+    <ul class="pager">
+        <?php
+        for ($i = 1; $i <= $num_posts; $i++) {
+
+            if ($i == $page) {
+                echo "<li ><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
+            } else
+                echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+        }
+        ?>
+    </ul>
 
     <!-- Footer -->
     <?php

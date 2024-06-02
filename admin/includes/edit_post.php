@@ -18,6 +18,7 @@ while ($row = mysqli_fetch_assoc($select_posts_by_id)) {
   $post_tags = $row['post_tags'];
   $post_status = $row['post_status'];
   $post_comments = $row['post_comment_count'];
+  $post_views = $row['post_views'];
 }
 
 if (isset($_POST['update_post'])) {
@@ -30,7 +31,8 @@ if (isset($_POST['update_post'])) {
   $post_tags = $_POST['post_tags'];
   $post_content = mysqli_real_escape_string($connection, $_POST['post_content']);
   $post_date = date('Y-m-d H:i:s');
-  $post_comment_count = 4;
+  // $post_comment_count = 4;
+  $post_views = $_POST['post_views'];
 
   move_uploaded_file($post_image_temp, "../images/$post_image");
 
@@ -55,7 +57,8 @@ if (isset($_POST['update_post'])) {
   $query .= "post_status = '{$post_status}', ";
   $query .= "post_tags = '{$post_tags}', ";
   $query .= "post_content = '{$post_content}', ";
-  $query .= "post_image = '{$post_image}' ";
+  $query .= "post_image = '{$post_image}', ";
+  $query .= "post_views = '{$post_views}' ";
   $query .= "WHERE post_id = {$the_post_id}";
   $update_post = mysqli_query($connection, $query);
   confirmQuery($update_post);
@@ -109,8 +112,15 @@ if (isset($_POST['cancel'])) {
   <div class="form-group">
     <label for="author">Post Author</label>
     <input type="text" class="form-control" name="author" value="<?php echo $post_author ?>">
-
   </div>
+
+  <div class="form-group">
+    <label for="post_views">Post Views</label>
+    <input type="text" class="form-control" name="post_views" value="<?php echo $post_views ?>" readonly>
+    <input class="btn btn-primary" type="button" name="reset_views" value="Reset Views"
+      onclick="document.getElementsByName('post_views')[0].value = '0'">
+  </div>
+
   <div class="form-group">
     <select name="post_status" id="">
 

@@ -66,6 +66,7 @@ include "includes/header.php";
                 $post_date = $row['post_date'];
                 $post_image = $row['post_image'];
                 $post_content = $row['post_content'];
+                $post_views = $row['post_views'];
 
 
 
@@ -97,6 +98,12 @@ include "includes/header.php";
                 <?php
 
             }
+
+            // Update post views count
+            $viewsCountQuery = "UPDATE posts SET post_views = post_views + 1 WHERE post_id = $post_id";
+            $updateViewsCount = mysqli_query($connection, $viewsCountQuery);
+            confirmQuery($updateViewsCount);
+
 
             ?>
 

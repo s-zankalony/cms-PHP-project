@@ -76,6 +76,7 @@ if (isset($_POST['checkBoxArray'])) {
         <th>Image</th>
         <th>Edit</th>
         <th>Delete</th>
+        <th>Views</th>
       </tr>
     </thead>
     <tbody>
