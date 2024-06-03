@@ -9,6 +9,8 @@ if (isset($_GET['logout'])) {
   logout();
 }
 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -62,5 +64,8 @@ if (isset($_GET['logout'])) {
     });
 
   </script>
+
+  <script src="admin/js/scripts.js"></script>
+
 
 </head>

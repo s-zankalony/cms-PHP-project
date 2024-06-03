@@ -1,4 +1,5 @@
 <?php include "db.php";
+include "../admin/functions.php";
 session_start();
 
 if (isset($_POST['register'])) {
@@ -46,6 +47,9 @@ if (isset($_POST['login'])) {
     $_SESSION['firstName'] = $db_user_firstname;
     $_SESSION['lastName'] = $db_user_lastname;
     $_SESSION['user_role'] = $db_user_role;
+
+
+
 
     if ($db_user_role !== 'admin') {
       header("Location: ../index.php");

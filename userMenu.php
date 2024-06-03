@@ -1,5 +1,26 @@
 <?php
 
+if (isset($_SESSION['user_id'])) {
+
+  if (isset($_GET['onlineusers'])) {
+    global $connection;
+    if (!$connection) {
+      session_start();
+      include_once "db.php";
+
+      // Update session activity
+      updateSession($connection, $_SESSION['user_id']);
+
+      // Remove inactive sessions
+      removeInactiveSessions($connection);
+
+      // Get active sessions
+      $activeUsers = countActiveSessions($connection);
+
+    }
+  }
+
+}
 
 
 
@@ -19,7 +40,12 @@ if (isset($_SESSION['username'])) {
 ?>
 <ul class="nav navbar-right top-nav navbar-nav">
 
+  <!-- <li><a href="#">Active Users: <span class='users-online'></span></a></li> -->
+
   <?php
+  $activeUsers = countActiveSessions($connection);
+  echo "<li><a href='#'>Active Users: {$activeUsers}</a></li>";
+
   if ((strpos($_SERVER['REQUEST_URI'], 'admin') !== false)) {
     echo "<li><a href='../index.php'>Home</a></li>";
   } else if ((strpos($_SERVER['REQUEST_URI'], '/') !== false) && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
@@ -27,6 +53,10 @@ if (isset($_SESSION['username'])) {
   } else {
     echo '';
   }
+
+
+
+
   ?>
 
 

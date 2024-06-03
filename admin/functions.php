@@ -190,13 +190,118 @@ function confirmQuery($query)
 }
 
 
+// function logout()
+// {
+//   global $connection;
+//   $sessionId = session_id();
+//   $query = "DELETE FROM user_sessions WHERE session_id = ?";
+//   $stmt = $connection->prepare($query);
+//   $stmt->bind_param('s', $sessionId);
+//   $stmt->execute();
+
+//   session_destroy();
+
+//   if (strpos($_SERVER['REQUEST_URI'], 'admin') !== false) {
+//     header("Location: ../index.php");
+//   } else {
+//     header("Location: index.php");
+//   }
+// }
+
 function logout()
 {
+  global $connection;
+  $sessionId = session_id();
+
+  // Debug: Check the session ID
+  echo "Session ID: " . $sessionId . "<br>";
+
+  // Verify if the session ID exists in the table
+  $checkQuery = "SELECT * FROM user_sessions WHERE session_id = ?";
+  $checkStmt = $connection->prepare($checkQuery);
+  $checkStmt->bind_param('s', $sessionId);
+  $checkStmt->execute();
+  $result = $checkStmt->get_result();
+
+  if ($result->num_rows > 0) {
+    echo "Session ID found in the database.<br>";
+
+    // Proceed with deleting the session
+    $query = "DELETE FROM user_sessions WHERE session_id = ?";
+    $stmt = $connection->prepare($query);
+    $stmt->bind_param('s', $sessionId);
+    $stmt->execute();
+
+    // Debug: Check if the query executed successfully
+    if ($stmt->affected_rows > 0) {
+      echo "Session deleted successfully.<br>";
+    } else {
+      echo "No session found with the provided session ID.<br>";
+    }
+
+    $stmt->close();
+  } else {
+    echo "Session ID not found in the database.<br>";
+  }
+
+  $checkStmt->close();
+
   session_destroy();
 
   if (strpos($_SERVER['REQUEST_URI'], 'admin') !== false) {
     header("Location: ../index.php");
   } else {
     header("Location: index.php");
+  }
+  exit();
+}
+
+
+// session functions
+
+function updateSession($connection, $user_id)
+{
+  $session_id = session_id();
+  $current_time = date('Y-m-d H:i:s');
+
+  // Update session info on user login or activity
+  $stmt = $connection->prepare("REPLACE INTO user_sessions (session_id, user_id, last_activity) VALUES (?, ?, ?)");
+  $stmt->bind_param('sis', $session_id, $user_id, $current_time);
+  $stmt->execute();
+}
+
+function removeInactiveSessions($connection)
+{
+  $inactive_time = date('Y-m-d H:i:s', strtotime('-15 minutes'));
+  $stmt = $connection->prepare("DELETE FROM user_sessions WHERE last_activity < ?");
+  $stmt->bind_param('s', $inactive_time);
+  $stmt->execute();
+}
+
+function countActiveSessions($connection)
+{
+  $stmt = $connection->prepare("SELECT COUNT(*) AS active_users FROM user_sessions");
+  $stmt->execute();
+  $result = $stmt->get_result()->fetch_assoc();
+  echo $result['active_users'];
+  return $result['active_users'];
+}
+
+
+if (isset($_GET['onlineusers'])) {
+  global $connection;
+  if (!$connection) {
+    session_start();
+    include_once "includes/db.php";
+
+    // Update session activity
+    updateSession($connection, $_SESSION['user_id']);
+
+    // Remove inactive sessions
+    removeInactiveSessions($connection);
+
+    // Get active sessions
+    $activeUsers = countActiveSessions($connection);
+
   }
 }

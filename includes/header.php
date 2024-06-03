@@ -9,6 +9,8 @@ if (isset($_GET['logout'])) {
   logout();
 }
 
+
+
 ?>
 
 
@@ -52,7 +54,7 @@ if (isset($_GET['logout'])) {
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
-  <!-- <script src="js/scripts.js"></script> -->
+  <script src="admin/js/scripts.js"></script>
 
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -61,6 +63,10 @@ if (isset($_GET['logout'])) {
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+  <!-- Loader CSS -->
+  <link href="admin/css/loader.css" rel="stylesheet">
+
 
   <script>
     $(document).ready(function () {
