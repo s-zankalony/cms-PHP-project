@@ -22,13 +22,13 @@ $('#load-screen')
     $(this).remove();
   });
 
-function loadUsersOnline() {
-  $.get('functions.php?onlineusers=result', function (data) {
-    $('.users-online').text(data);
-    // console.log(`data: ${data}`);
-  });
-}
+// function loadUsersOnline() {
+//   $.get('functions.php?onlineusers=result', function (data) {
+//     $('.users-online').text(data);
+//     // console.log(`data: ${data}`);
+//   });
+// }
 
-setInterval(function () {
-  loadUsersOnline();
-}, 5000);
+// setInterval(function () {
+//   loadUsersOnline();
+// }, 5000);
